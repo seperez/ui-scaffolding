@@ -3,15 +3,13 @@ var mobile, desktop;
 mobile = {
     'js': [],
     'css': [],
-    'tmpl': [],
-    'fonts': []
+    'tmpl': []
 };
 
 desktop = {
     'js': [],
     'css': [],
-    'tmpl': [],
-    'fonts': []
+    'tmpl': []
 };
 
 /*
