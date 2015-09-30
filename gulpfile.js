@@ -57,6 +57,7 @@ gulp.task('jsBuild', function() {
     setTimeout(function(){
         Object.keys(bundles.js).forEach(function(bundle) {
             return gulp.src(bundles.js[bundle])
+                .pipe($.plumber())
                 .pipe($.concat(bundle + '.js'))
                 .pipe($.size({
                     title: bundle + '.js size: '
@@ -69,6 +70,7 @@ gulp.task('jsBuild', function() {
 gulp.task('cssBuild', function() {
     Object.keys(bundles.css).forEach(function(bundle) {
         return gulp.src(bundles.css[bundle])
+            .pipe($.plumber())
             .pipe($.sass({
                 style: 'expanded'
             }))
@@ -89,7 +91,14 @@ gulp.task('cssBuild', function() {
 gulp.task('imageBuild', function() {
     mkdirp(src.build.images);
 
-    return gulp.src('./src/fonts/**/*.+(png|gif|jpg|svg)')
+    //Vendor Images
+    if(bundles.images.length > 0){
+        gulp.src(bundles.images)
+            .pipe(gulp.dest(src.build.images))
+    }
+
+    //App Images
+    return gulp.src(['./src/images/**/*.+(png|gif|jpg|svg)'])
         // .pipe($.imageOptimization({
         //     progressive: true,
         //     interlaced: true
@@ -103,8 +112,16 @@ gulp.task('imageBuild', function() {
 gulp.task('fontBuild', function() {
     mkdirp(src.build.fonts);
 
-    return gulp.src('./src/fonts/**/*.+(eot|svg|ttf|woff)')
+    //Vendor Fonts
+    if(bundles.fonts.length > 0){
+        gulp.src(bundles.fonts)
+            .pipe(gulp.dest(src.build.fonts))
+    }
+
+    //App Fonts
+    gulp.src('./src/fonts/**/*.+(eot|svg|ttf|woff)')
         .pipe(gulp.dest(src.build.fonts))
+
 });
 
 gulp.task('cleanBuild', function() {
