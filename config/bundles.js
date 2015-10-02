@@ -4,9 +4,11 @@ var js, css,
 
 js = {};
 
-css = {};
+css = {
+    'mobile': defaults.mobile.css
+};
 
-fonts = _.flatten([]);
+fonts = ['node_modules/navigations/dist/*.{ttf,woff,eof,svg}'];
 
 images = _.flatten([]);
 

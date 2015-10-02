@@ -2,7 +2,9 @@ var mobile, desktop;
 
 mobile = {
     'js': [],
-    'css': [],
+    'css': [
+        'src/styles/pages/main/main__small.scss'
+    ],
     'tmpl': []
 };
 

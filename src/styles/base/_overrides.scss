@@ -1,0 +1,30 @@
+body {
+    font-size: 32px;
+    background-image: url('a.png');
+
+    background-image: url('../images/foo.jpg');
+    background-image: url("../images/bar/foo.jpg");
+    background-image: url("../images/1.0.0-rc.1/foo.png");
+    background-image: url("./images/bar/foo.png");
+    background-image: url("images/bar/foo.png");
+    background-image: url(./images/bar/foo.png);
+    background-image: url(../images/bar/foo.png);
+    background-image: url(images/bar/foo.png);
+    background-image: url(foo.png);
+    background-image: url("http://ui.mlstatic.com/assets/a.png");
+
+    background-image: url('../images/foo.jpg');
+
+    @font-face {
+        font-family: "icons";
+        src: url("icons.eot"); /* IE9 */
+        src: url("icons.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+
+        url("icons.woff") format("woff"), /* chrome, firefox */
+        url("icons.ttf") format("truetype"), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+
+        url("icons.svg#icons") format("svg"); /* iOS 4.1- */
+        font-style: normal;
+        font-weight: normal;
+    }
+}
