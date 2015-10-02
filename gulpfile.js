@@ -24,6 +24,8 @@ var path = require('path'),
         }
     },
 
+    cdn = '//ui.mlstatic.com/assets/',
+
     bundles = require('./config/bundles');
 
 //Tasks for build
@@ -75,11 +77,12 @@ gulp.task('cssBuild', function() {
                 style: 'expanded'
             }))
             .pipe($.postcss([
-                require('autoprefixer-core')({
+                require('autoprefixer')({
                     browsers: ['last 5 versions', 'android >= 2.1', '> 1%']
                 })
             ]))
-            // .pipe($.replace('../assets/', '/build/fonts/'))
+            .pipe($.replace(/(url\()(\'|\"|\.{1,2})*(\/*.*\/)*(.+\.[png|jpg|gif|svg]{3}.*)(\2\))/g, '$1$2images/$4$5'))
+            .pipe($.replace(/(url\()(\'|\"|\.{1,2})*(\/*.*\/)*(.+\.[eot|woff|ttf|otf|svg]{3,4}.*)(\2\)){1}/g, '$1$2fonts/$4$5'))
             .pipe($.concat(bundle + '.css'))
             .pipe($.size({
                 title: bundle + '.css size: '
@@ -149,7 +152,7 @@ gulp.task('cssDist', function() {
             var fileName = path.basename(file.path, '.css');
 
             return stream
-                .pipe($.replace('/build/fonts/', '//myaccount.mlstatic.com/messaging/fonts/'))
+                .pipe($.replace(/(url\()(\'|\"|\.{1,2})*(\/*.*\/)*(.+\.[a-zA-Z]{3,4}.*)(\2\))/g, '$1$2'+ cdn +'$4$5'))
                 .pipe($.postcss([
                     require('cssnano')({
                         autoprefixer: false
@@ -194,7 +197,7 @@ gulp.task('build',function(){
     runSequence(
         'cleanBuild',
         // ['urls','i18n','tmplBuild'],
-        ['fontBuild'],
+        ['fontBuild', 'imageBuild'],
         'cssBuild',
         'jsBuild'
     );
