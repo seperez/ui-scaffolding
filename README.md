@@ -1,1 +1,1 @@
-# UI Scaffolding
+# UI WebPage Scaffolding
